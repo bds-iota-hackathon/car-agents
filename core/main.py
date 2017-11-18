@@ -41,13 +41,12 @@ def create_station(station):
         logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
     
 
-def search_stations(lon, lat):
+def search_stations(lon, lat, radius):
+    logger.info("Searching stations")
     txs = iota.find_transactions([TryteString(iota.get_retarded_tag())])
-    logger.info(txs)
-    for tx in txs: 
-        msg = tx.signature_message_fragment
-    # stopped here (Alexei)
-    return [t for t in tx.message]
+
+    # TODO: return relevant transactions
+    return [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
 
 logger.info("Initiating use case test run")
 
