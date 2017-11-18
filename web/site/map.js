@@ -1,11 +1,11 @@
 jQuery(function($) {
-    // Asynchronously Load the map API 
+    // Asynchronously Load the map API
     var script = document.createElement('script');
     script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
     document.body.appendChild(script);
 });
 
-function initialize() {  
+function initialize() {
 
   var locs = [{
     time: 1511030742,
@@ -19,7 +19,7 @@ function initialize() {
     //         locs = data
     //     })
     //     .catch(function(error) {
-    //     }) 
+    //     })
     // }
 
 
@@ -28,17 +28,17 @@ function initialize() {
     var mapOptions = {
         mapTypeId: 'roadmap'
     };
-                    
+
     // Display a map on the page
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     map.setTilt(45);
-        
+
     // Multiple Markers
     var markers = [];
 
         // Info Window Content
     var infoWindowContent = [];
-        
+
     // Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
 
@@ -52,8 +52,8 @@ function initialize() {
         markers.push([timediff.toString(), locs[j].lat, locs[j].long]);
        // console.log(j)
     }
-                            
-    // Loop through our array of markers & place each one on the map  
+
+    // Loop through our array of markers & place each one on the map
     for( i = 0; i < markers.length; i++ ) {
         var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
         bounds.extend(position);
@@ -63,7 +63,7 @@ function initialize() {
             title: markers[i][0]
         });
 
-          // Allow each marker to have an info window    
+          // Allow each marker to have an info window
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
                 infoWindow.setContent(infoWindowContent[i][0]);
@@ -79,5 +79,5 @@ function initialize() {
     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         google.maps.event.removeListener(boundsListener);
     });
-    
+
 }

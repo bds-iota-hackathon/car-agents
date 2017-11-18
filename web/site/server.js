@@ -1,3 +1,5 @@
+var google = require('google');
+
 var http = require('http');
 var fileSystem = require('fs');
 
