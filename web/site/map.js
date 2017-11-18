@@ -22,7 +22,6 @@ function donate(address) {
             window.alert("Thanks!")
         })
         .catch(function(error) {});
-
 };
 
 function init_map() {
