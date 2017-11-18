@@ -41,12 +41,19 @@ def create_station(station):
         logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
     
 
+def within(txd, lon, lat, radius):
+    x = txd['long'] - lon
+    y = txd['lat'] - lat
+
+    return (x * x + y * y < radius ** 2)
+
 def search_stations(lon, lat, radius):
     logger.info("Searching stations")
     txs = iota.find_transactions([TryteString(iota.get_retarded_tag())])
+    txs = [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
 
-    # TODO: return relevant transactions
-    return [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
+    # Filter lat, long, rad
+    return [tx for tx in txs if within(tx, lon, lat, radius)]
 
 logger.info("Initiating use case test run")
 
@@ -63,5 +70,5 @@ price = 0.5 # miota
 id = "Teststation"
 station = ChargingStation(lon, lat, price, id, vendor_address)
 
-#create_station(station)
-search_stations(0.1, 20)
+# create_station(station)
+# print search_stations(18, 54, 2)
