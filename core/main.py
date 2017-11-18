@@ -8,22 +8,22 @@ logger = logging.getLogger(__name__)
 
 # Test data
 url = "https://testnet140.tangle.works:443"
-seed = "FNCWNXJWJIVDGPRWNZYKOMKNIIATPPDKEVCZEWSZTEVIWJFCOUV9PJD9AUCEVQLFEAI9UBUAVQKVEBLKN"
-address = "DDLAERGKJZCFCICUTHTPZNACYCNCLJMBFK9OKI9BMMWXYVKBYJZRCW9CIIKFJHOCPOQHNAMOOUERZZIHD"
+seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
+address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
 
 iota = IotaWrapper(url, seed)
-print iota.connect()
-print TryteString.from_string("CARSHARING")
+logger.info(iota.connect())
+
+logger.info("Trying to add transaction")
+test_address = "ZRJUBCUBQKKE9RRWTIBU9VVGZBZBDQUFSNHJXMMEZVMXIDZKIOYEDA9UERLEUURJLZSMZGEWKSPTBKHMY"
+test_message = TryteString.from_string("{data:[{node:test}]}")
 bundle = iota.send_transfer(
-    transfers=[
-                ProposedTransaction(
-                    address=Address("JEMEHHS9EEASH9UFOLYAKBCTNKGBADCLTKCEOEKPZVILIGTZOGYMFMWKQABVVNKHGHBHTJNRVDDMMUQOX"),
-                    value=0,
-                    message=TryteString.from_string("Damn it works in Python!"),
-                    tag=TryteString.from_string("CARSHARING")
-                )
-    ],
+    transfers=iota.create_transfers(test_address, test_message),
     inputs=[Address(address, key_index=0, security_level=0)]
 )
+
 if bundle is not None:
-    print "Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible())
+    logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
+
+logger.info("Trying to get message by tag")
+logger.info(iota.find_transactions([iota.get_retarded_tag()]))
