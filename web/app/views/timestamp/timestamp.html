@@ -1,0 +1,35 @@
+<div class="jumbotron col-md-4 div-center">
+    <h2 class="bot-margin">{{pageTitle}} </h2>
+    <form class="form" name="timestampForm" data-ng-keydown="keyPress($event.keyCode)" novalidate>
+
+        <div class="form-group">
+                <div class="input-group">
+                    <label class="input-group-btn">
+                        <span class="btn btn-primary">
+                            Browse&hellip;
+                            <input type="file" ngf-select="onFileSelect($files)" style="display: none;"/>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" ng-model="vm.file.name" placeholder="Please select a file" readonly>
+
+                    <label data-ng-if="vm.file" class="input-group-btn">
+                        <span class="btn btn-default">
+                            {{vm.file.size/1024/1024|number:2 }} MB
+                        </span>
+                    </label>
+                </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" data-ng-click="vm.timestamp()"
+                    data-ng-disabled="!vm.file" autofocus>
+                Timestamp
+            </button>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default btn-block" data-ng-click="vm.verify()"
+                    data-ng-disabled="!vm.file" autofocus>
+                Verify
+            </button>
+        </div>
+    </form>
+</div>

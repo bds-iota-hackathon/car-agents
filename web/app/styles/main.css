@@ -1,0 +1,271 @@
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0; }
+
+.blue-background{
+    background-color: #2d3e63 ;
+}
+
+.no-background{
+    background-color: #f5f5f5 ;
+}
+.selectable {
+    cursor: pointer !important;
+}
+
+.div-center {
+    margin: 0 auto;
+    float: initial;
+}
+
+a:hover {
+    cursor: pointer;
+}
+.green {
+    color: green;
+}
+
+.red {
+    color: darkred;
+}
+
+.white {
+    color: white !important;
+}
+
+.red_background{
+    background-color: #d9534f !important;
+    color: white;
+}
+
+.orange-red {
+    color: orangered;
+}
+
+.orange {
+    color: orange;
+}
+
+.blue {
+    color: #00b3ee;
+}
+
+.darkBlue {
+    color: #337AB7;
+}
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.marketing,
+.footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Supporting marketing content */
+.marketing {
+    margin: 40px 0;
+}
+
+.marketing p + h4 {
+    margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    /* Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+
+.nav > li.active > a {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+.margin-left {
+    margin-left: 30px;
+    margin-bottom: 7px;
+}
+
+.top-margin {
+    margin-top: 20px;
+}
+
+.bot-margin {
+    margin-bottom: 2em;
+}
+
+/* sidebar */
+ul.sidebar .sidebar-separator div {
+    margin: auto;
+    width: 80%;
+    border-bottom: 1px solid #738bc0;
+    transition: all .4s ease;
+}
+
+#page-wrapper:not(.open) #sidebar-wrapper ul.sidebar .sidebar-separator div {
+    width: 50px;
+    float: right;
+    margin-right: 10px;
+}
+
+/* send-confirmation */
+
+.send-confirmed {
+    width: 100%;
+    height: 100%;
+    background-color: #5cb85c;
+}
+
+.send-error {
+    width: 100%;
+    height: 100%;
+    background-color: #d9534f;
+}
+
+/* login */
+.login {
+    background-color: #30426a;
+}
+
+/* login image */
+
+.login-image {
+    width: 300px;
+    height: auto;
+}
+
+@media screen and (max-width: 990px) {
+    .login-image {
+        width: 80%;
+        height: auto;
+    }
+}
+@media screen and (max-width: 768px) {
+    .login-image {
+        width: 90%;
+        height: auto;
+    }
+}
+.no-padding {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.no-padding-bottom {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.small-margin-top {
+  margin-top: 30px !important;
+}
+
+.account-hr {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  width: 100%;
+}
+
+.test {
+  background-color: #00A000;
+}
+
+.vertical-align {
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.v-align {
+  float: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#transferForm .input-group {
+  padding: 5px;
+}
+
+#tokenForm .input-group {
+  padding: 5px;
+}

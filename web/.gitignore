@@ -1,0 +1,15 @@
+# Directories #
+/target
+/node_modules
+*.iml
+*.bat
+/node
+/bin
+/dist
+bower_components
+/.settings
+/.idea
+npm-debug.log
+/.tmp
+/.sass-cache
+*.lnk

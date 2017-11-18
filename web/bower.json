@@ -1,0 +1,46 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-animate": "~1.5.0",
+    "json3": "~3.3.2",
+    "es5-shim": "~4.5.2",
+    "angular-resource": "~1.5.0",
+    "angular-cookies": "~1.5.0",
+    "angular-sanitize": "~1.5.0",
+    "angular-touch": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-filter": "^0.5.8",
+    "AngularJS-Toaster": "angularjs-toaster#^1.2.0",
+    "ng-dialog": "ngDialog#^0.5.8",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.2.1",
+    "font-awesome": "4.3.0",
+    "angular-websocket": "^1.1.0",
+    "ng-file-upload": "^12.2.13"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.3.0"
+  },
+  "appPath": "app",
+  "moduleName": "frontendApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "less/font-awesome.less",
+        "css/font-awesome.css"
+      ]
+    }
+  },
+  "resolutions": {
+    "angular": "~1.5.0"
+  }
+}
