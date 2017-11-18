@@ -7,8 +7,6 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado_json.application
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from tornado.options import options
 from tornado_json.routes import get_routes
 
@@ -32,12 +30,6 @@ class Application(tornado_json.application.Application):
             cookie_secret='lpyoGs9/TAuA8IINRTRRjlgBspMDy0lKtvQNGrTnA9g=',
             )
         super(Application, self).__init__(routes=routes, generate_docs=True, settings=settings)
-
-        engine = create_engine('sqlite:///:memory:', echo=True)
-
-        self.db = scoped_session(sessionmaker(bind=engine))
-
-        models.Base.metadata.create_all(engine, checkfirst=True)
 
 
 def main():

@@ -1,7 +1,5 @@
 from tornado_json.requesthandlers import APIHandler
 
-from caragent.db import models
-
 
 class Search(APIHandler):
 
