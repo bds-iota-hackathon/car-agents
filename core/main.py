@@ -42,10 +42,12 @@ def create_station(station):
     
 
 def search_stations(lon, lat):
-    
-    tx = iota.find_transactions([iota.get_retarded_tag()])
-    logger.info(tx)
-    return [t for t in tx]
+    txs = iota.find_transactions([iota.get_retarded_tag()])
+    logger.info(txs)
+    for tx in txs: 
+        msg = tx.signature_message_fragment
+    # stopped here (Alexei)
+    return [t for t in tx.message]
 
 logger.info("Initiating use case test run")
 
