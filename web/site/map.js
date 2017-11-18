@@ -49,8 +49,21 @@ function initialize() {
     // console.log(locs.length)
     for(j = 0; j < locs.length; j++) {
         var timediff = currentime - locs[j].time;
-        infoWindowContent.push(['<div class="info_content">' +
-        '<p>' + Math.round(timediff/60) + ' mins ago </p> </div>'])
+        var lat = locs[j].lat;
+        var long = locs[j].long;
+        infoWindowContent.push(['<div class="info_content">'
+            + '<p>'
+            + Math.round(timediff/60)
+            + ' mins ago '
+            + '</p>'
+            + '</div>\n'
+            + '<a href=\"https://www.google.com/maps/place/'
+            + lat + 'N'
+            + '+'
+            + long + 'W'
+            + '\/\">'
+            + 'Get Directions'
+            + '</a>'])
         markers.push([timediff.toString(), locs[j].lat, locs[j].long]);
        // console.log(j)
     }
