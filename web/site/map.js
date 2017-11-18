@@ -78,16 +78,20 @@ function init_map() {
             + '</div>\n'
     }
 
-    // console.log(locs.length)
     for(j = 0; j < locs.length; j++) {
-
         var price = locs[j].price;
         var lat = locs[j].lat;
         var long = locs[j].long;
 
-        infoWindowContent.push([
-            show_price(price)
+        infoWindowContent.push(['<div class="info_content">'
+            + show_price(price)
+            + '<p>'
+            + Math.round(timediff/60)
+            + ' mins ago '
+            + '</p>'
+            + '</div>\n'
             + show_directions_link(lat, long)
+//          + '<a href = "/updateStation?id=stationID&status=FREE">  Claim </a>'
         ])
 
         markers.push([locs[j].lat, locs[j].long]);
