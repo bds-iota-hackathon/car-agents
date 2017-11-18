@@ -3,27 +3,27 @@ var locs;
 
 function init() {
     navigator.geolocation.getCurrentPosition(showPosition)
-}
+};
 
 function showPosition(position) {
     if (position) {
         currLocation = { lat: position.coords.latitude, long: position.coords.latitude};
         init_map();
     }
-}
+};
 
 function advertiseSlot() {
 // TODO: advertiseSlot
-}
+};
 
 function donate(address) {
-    fetch("/donate?address=" + address) {
-        .then(function(data){
+    fetch("/donate?address=" + address)
+        .then(function(data) {
             window.alert("Thanks!")
         })
-        .catch(function(error) {}) 
+        .catch(function(error) {});
     
-}
+};
 
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
@@ -36,7 +36,7 @@ function init_map() {
         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
     }];
 
-    fetch('/search?long=' + currLocation.long + '&lat=' currLocation.lat) {
+    fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
         .then(function(data){
             locs = data
         })
@@ -44,9 +44,7 @@ function init_map() {
 
     var map;
     var bounds = new google.maps.LatLngBounds();
-    var mapOptions = {
-        mapTypeId: 'roadmap'
-    };
+    var mapOptions = {mapTypeId: 'roadmap'};
 
     // Display a map on the page
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
