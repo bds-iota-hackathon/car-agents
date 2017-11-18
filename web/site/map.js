@@ -1,35 +1,50 @@
-jQuery(function($) {
-    // Asynchronously Load the map API
-    // var script = document.createElement('script');
-    // script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-    // document.body.appendChild(script);
+var currLocation;
+var locs;
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
+function init() {
+    navigator.geolocation.getCurrentPosition(showPosition)
+};
+
+function showPosition(position) {
+    if (position) {
+        currLocation = { lat: position.coords.latitude, long: position.coords.latitude};
+        init_map();
     }
+};
 
-    function showPosition(position) {
-        console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude);
-    }
-});
+function advertiseSlot() {
+// TODO: advertiseSlot
+};
 
-function initialize() {
+function donate(address) {
+    fetch("/donate?address=" + address)
+        .then(function(data) {
+            window.alert("Thanks!")
+        })
+        .catch(function(error) {});
+    
+};
 
-  var locs = [{
-    time: 1511030742,
-    long: -0.119562,
-    lat: 51.503454,
-    id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
-    address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
-  }];
+function init_map() {
+    console.log(currLocation.lat, currLocation.long);
+
+    locs = [{
+        time: 1511030742,
+        long: -0.119562,
+        lat: 51.503454,
+        id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
+        address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
+    }];
+
+    fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+        .then(function(data){
+            locs = data
+        })
+        .catch(function(error) {}) 
 
     var map;
     var bounds = new google.maps.LatLngBounds();
-    var mapOptions = {
-        mapTypeId: 'roadmap'
-    };
+    var mapOptions = {mapTypeId: 'roadmap'};
 
     // Display a map on the page
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
@@ -94,5 +109,4 @@ function initialize() {
     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         google.maps.event.removeListener(boundsListener);
     });
-
 }
