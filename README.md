@@ -1,4 +1,21 @@
-# Car Agents
+# PlugInBaby
+### The Decentralized E-Car Charge Station Marketplace
+
+#### Idea
+
++ Advertise private E-car charging stations to public 
++ P2P settlement on using IOTA
++ Decentralize E-car charing provides --> incentivize quicker adoption
+
+First PoC for charging stations using IOTA: https://medium.com/@harmvandenbrink/how-elaadnl-built-a-poc-charge-station-running-fully-on-iota-and-iota-only-e16ed4c4d4d5
+
+
+Payment approach: trust in IOT device OR pay per minute in advance (worst case: loose payment for a minute)
+
+
+
+
+
 
 ### iotawrapper functions
 
