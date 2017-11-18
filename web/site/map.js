@@ -14,14 +14,6 @@ function initialize() {
     id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
     address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
   }];
-    // fetch('/search?long=27.1&lat=31.2') {
-    //     .then(function(data){
-    //         locs = data
-    //     })
-    //     .catch(function(error) {
-    //     })
-    // }
-
 
     var map;
     var bounds = new google.maps.LatLngBounds();
