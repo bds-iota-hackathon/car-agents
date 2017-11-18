@@ -29,7 +29,8 @@ function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
     locs = [{
-        price: 0.01 // Given in milli iota
+        availability: "free",
+        price: 0.01, // Given in milli iota
         long: -0.119562,
         lat: 51.503454,
         id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
@@ -61,9 +62,9 @@ function init_map() {
 
     function show_directions_link(lat, long) {
         return '<a href=\"https://www.google.com/maps/place/'
-            + lat + 'N'
+            + lat.toString() + 'N'
             + '+'
-            + long.toString()
+            + long.toString() + 'W'
             + '\/\">'
             + 'Get Directions'
             + '</a>';
@@ -90,11 +91,11 @@ function init_map() {
             + show_directions_link(lat, long)
         ])
 
-        markers.push([timediff.toString(), locs[j].lat, locs[j].long]);
+        markers.push([locs[j].lat, locs[j].long]);
     }
 
     // Loop through our array of markers & place each one on the map
-    for( i = 0; i < markers.length; i++ ) {
+    for(i = 0; i < markers.length; i++) {
         var position = new google.maps.LatLng(markers[i][0], markers[i][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
@@ -115,7 +116,9 @@ function init_map() {
     }
 
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+    var boundsListener = google.maps.event.addListener((map),
+                                                       'bounds_changed',
+                                                       function(event)     {
         google.maps.event.removeListener(boundsListener);
     });
 }
