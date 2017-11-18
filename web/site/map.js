@@ -63,7 +63,7 @@ function init_map() {
         return '<a href=\"https://www.google.com/maps/place/'
             + lat + 'N'
             + '+'
-            + long + 'W'
+            + long.toString()
             + '\/\">'
             + 'Get Directions'
             + '</a>';
@@ -95,12 +95,11 @@ function init_map() {
 
     // Loop through our array of markers & place each one on the map
     for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        var position = new google.maps.LatLng(markers[i][0], markers[i][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
             map: map,
-            title: markers[i][0]
         });
 
           // Allow each marker to have an info window
