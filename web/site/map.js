@@ -1,8 +1,18 @@
 jQuery(function($) {
     // Asynchronously Load the map API
-    var script = document.createElement('script');
-    script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-    document.body.appendChild(script);
+    // var script = document.createElement('script');
+    // script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+    // document.body.appendChild(script);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude);
+    }
 });
 
 function initialize() {

@@ -7,14 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <!-- Imports the google maps API-->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Sar2HkdxQgi-owHxMkVS4T2blMK7PCo&callback=initMap">
-  </script>
+    src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize"></script>
 
+  <script src="map.js"></script>
 </head>
 <body>
 
@@ -41,20 +40,8 @@
     </fieldset>
   </div>
 
-  <div id="map"></div>
-    <script>
-      function initMap() {
-        var pos = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: pos,
-          zoom: 4
-        });
-      }
-      initMap()
-    </script>
   <div id="map_wrapper" style='height: 400px'>
     <div id="map_canvas" class="mapping" style="width: 100%; height: 100%"></div>
   </div>
-  <script src="map.js"></script>
 </body>
 </html>
