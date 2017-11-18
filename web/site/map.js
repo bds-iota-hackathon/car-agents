@@ -105,20 +105,16 @@ function init_map() {
     // Loop through our array of markers & place each one on the map
     for(i = 0; i < markers.length; i++) {
         if (markers[i][3]==="free") {
-            colour = "green"
+            icon_url = "http://mt.google.com/vt/icon?psize=25&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=44&ay=50&text=%E2%80%A2"
         } else {
-            colour = "red"
+            icon_url = "http://mt.google.com/vt/icon?psize=25&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-b.png&ax=44&ay=50&text=%E2%80%A2"
         }
         var position = new google.maps.LatLng(markers[i][0], markers[i][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
             map: map,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                strokeColor: colour,
-                scale: 10,
-                },
+            icon: {url: icon_url,},
         });
 
           // Allow each marker to have an info window
