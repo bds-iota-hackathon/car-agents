@@ -1,10 +1,7 @@
 # File to test all stuff in the api
 
 from iotawrapper import IotaWrapper
-<<<<<<< HEAD
 from charging_station import ChargingStation
-=======
->>>>>>> dd9cc42949f5d025b33735f336919fbf78d06f68
 from iota import *
 import json
 import logging
