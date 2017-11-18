@@ -8,22 +8,39 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Imports the google maps API-->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Sar2HkdxQgi-owHxMkVS4T2blMK7PCo&callback=initMap">
+  </script>
+
 </head>
 <body>
 
   <div class="jumbotron text-center">
-    <h1>My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+    <h1></h1>
   </div>
 
   <div class="container">
     <fieldset>
       <form action="/" method="post">
         <input name="city" type="text" class="ghost-input" placeholder="Last seen time / minutes" required>
-        <input type="submit" class="ghost-button" value="Get Weather">
+        <input type="submit" class="ghost-button" value="Search">
       </form>
     </fieldset>
   </div>
+
+  <div id="map"></div>
+    <script>
+      function initMap() {
+        var pos = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: pos,
+          zoom: 4
+        });
+      }
+      initMap()
+    </script>
 
 </body>
 </html>
