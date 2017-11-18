@@ -40,7 +40,7 @@ class IotaWrapper:
             ProposedTransaction(
                 # All hail the glory of IOTA and their dummy transactions for tag retrieval.
                 address=Address("SQAZ9SXUWMPPVHKIWMZWZXSFLPURWIFTUEQCMKGJAKODCMOGCLEAQQQH9BKNZUIFKLOPKRVHDJMBTBFYW"),
-                value=0
+                value = value
             ),
             ProposedTransaction(
                 address=Address(address),
