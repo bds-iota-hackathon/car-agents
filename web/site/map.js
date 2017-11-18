@@ -22,14 +22,14 @@ function donate(address) {
             window.alert("Thanks!")
         })
         .catch(function(error) {});
-    
+
 };
 
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
     locs = [{
-        time: 1511030742,
+        price: 0.01 // Given in milli iota
         long: -0.119562,
         lat: 51.503454,
         id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
@@ -40,7 +40,7 @@ function init_map() {
         .then(function(data){
             locs = data
         })
-        .catch(function(error) {}) 
+        .catch(function(error) {})
 
     var map;
     var bounds = new google.maps.LatLngBounds();
@@ -53,34 +53,44 @@ function init_map() {
     // Multiple Markers
     var markers = [];
 
-        // Info Window Content
+    // Info Window Content
     var infoWindowContent = [];
 
     // Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
 
-
-    var currentime = Math.round((new Date()).getTime() / 1000);
-    // console.log(locs.length)
-    for(j = 0; j < locs.length; j++) {
-        var timediff = currentime - locs[j].time;
-        var lat = locs[j].lat;
-        var long = locs[j].long;
-        infoWindowContent.push(['<div class="info_content">'
-            + '<p>'
-            + Math.round(timediff/60)
-            + ' mins ago '
-            + '</p>'
-            + '</div>\n'
-            + '<a href=\"https://www.google.com/maps/place/'
+    function show_directions_link(lat, long) {
+        return '<a href=\"https://www.google.com/maps/place/'
             + lat + 'N'
             + '+'
             + long + 'W'
             + '\/\">'
             + 'Get Directions'
-            + '</a>'])
+            + '</a>';
+    }
+
+    function show_price(price) {
+        return '<div class="info_content">'
+            + '<p>'
+            + price
+            + ' mi / W'
+            + '</p>'
+            + '</div>\n'
+    }
+
+    // console.log(locs.length)
+    for(j = 0; j < locs.length; j++) {
+
+        var price = locs[j].price;
+        var lat = locs[j].lat;
+        var long = locs[j].long;
+
+        infoWindowContent.push([
+            show_price(price)
+            + show_directions_link(lat, long)
+        ])
+
         markers.push([timediff.toString(), locs[j].lat, locs[j].long]);
-       // console.log(j)
     }
 
     // Loop through our array of markers & place each one on the map
