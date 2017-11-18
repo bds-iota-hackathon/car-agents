@@ -72,6 +72,8 @@ class IotaWrapper:
     def find_transactions(self, tags):
         try:
             response = self.__api.find_transactions(tags=tags)
+            if len(response["hashes"]) == 0:
+                return []
             trytes = self.__api.get_trytes(response["hashes"])
             result = []
             for trytestring in trytes["trytes"]:

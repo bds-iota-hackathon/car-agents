@@ -42,7 +42,7 @@ def create_station(station):
     
 
 def search_stations(lon, lat):
-    txs = iota.find_transactions([iota.get_retarded_tag()])
+    txs = iota.find_transactions([TryteString(iota.get_retarded_tag())])
     logger.info(txs)
     for tx in txs: 
         msg = tx.signature_message_fragment
