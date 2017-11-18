@@ -1,4 +1,5 @@
 var currLocation;
+var locs;
 
 function init() {
     navigator.geolocation.getCurrentPosition(showPosition)
@@ -11,16 +12,35 @@ function showPosition(position) {
     }
 }
 
+function advertiseSlot() {
+// TODO: advertiseSlot
+}
+
+function donate(address) {
+    fetch("/donate?address=" + address) {
+        .then(function(data){
+            window.alert("Thanks!")
+        })
+        .catch(function(error) {}) 
+    
+}
+
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
-    var locs = [{
+    locs = [{
         time: 1511030742,
         long: -0.119562,
         lat: 51.503454,
         id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
     }];
+
+    fetch('/search?long=' + currLocation.long + '&lat=' currLocation.lat) {
+        .then(function(data){
+            locs = data
+        })
+        .catch(function(error) {}) 
 
     var map;
     var bounds = new google.maps.LatLngBounds();
