@@ -34,7 +34,7 @@ function init_map() {
         price: 0.01, // Given in milli iota
         long: -0.119562,
         lat: 51.503454,
-        id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
+        owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
     },
     {
@@ -42,7 +42,7 @@ function init_map() {
         price: 0.01, // Given in milli iota
         long: -0.119580,
         lat: 51.503474,
-        id: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
+        owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
     }];
 
@@ -71,9 +71,9 @@ function init_map() {
 
     function show_directions_link(lat, long) {
         return '<a href=\"https://www.google.com/maps/place/'
-            + lat.toString() + 'N'
+            + lat.toString()
             + '+'
-            + long.toString() + 'W'
+            + long.toString()
             + '\/\">'
             + 'Get Directions'
             + '</a>';
@@ -82,7 +82,7 @@ function init_map() {
     function show_price(price) {
         return '<p>'
             + price
-            + ' mi / W'
+            + ' zloty/min'
             + '</p>'
     }
 
