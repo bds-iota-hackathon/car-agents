@@ -9,9 +9,9 @@ import tornado.web
 import tornado_json.application
 from tornado.options import options
 from tornado_json.routes import get_routes
+from core.iotawrapper import IotaWrapper
 
 import agent
-from db import models
 
 
 class Application(tornado_json.application.Application):
@@ -31,6 +31,12 @@ class Application(tornado_json.application.Application):
             )
         super(Application, self).__init__(routes=routes, generate_docs=True, settings=settings)
 
+        self.ulr = "http://p103.iotaledger.net:14700"
+        self.address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
+        self.seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
+
+        self.iota = IotaWrapper(self.ulr, self.seed)
+        self.iota.connect()
 
 def main():
     tornado.options.parse_command_line()

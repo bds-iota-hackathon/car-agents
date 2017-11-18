@@ -13,7 +13,7 @@ url = "http://p103.iotaledger.net:14700"
 seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
 address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
 
-iota = IotaWrapper(url, seed)
+iota = IotaWrapper(url, seed, address)
 logger.info(iota.connect())
 
 # logger.info("Trying to add transaction")

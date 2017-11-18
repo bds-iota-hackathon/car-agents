@@ -45,10 +45,13 @@ class IotaWrapper:
             ProposedTransaction(
                 address=Address(address),
                 value=value,
-                message=message,
+                message=TryteString.from_string(message),
                 tag=self.get_retarded_tag()
             )
         ]
+
+    def create_inputs(self, address):
+        return [Address(address, key_index=0, security_level=0)]
 
     def send_transfer(self, transfers, inputs=[], depth=3, min_weight_magnitude=16):
         try:
