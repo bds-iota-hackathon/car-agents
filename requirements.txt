@@ -1,4 +1,4 @@
-Tornado-JSON==1.3.2
-PyOTA==2.0.2
-SQLAlchemy==1.1.15
-Tornado==4.5.2
+tornado-json==1.2.2
+pyota==2.0.2
+sqlalchemy==1.1.15
+tornado==4.5.2

@@ -7,7 +7,6 @@ https://github.com/pypa/sampleproject
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
-from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
@@ -39,10 +38,10 @@ setup(
     maintainer_email='',
 
     scripts=[
-        'core/main.py'
+        'car/Agent.py'
     ],
     entry_points = {
-        'console_scripts': ['car=core.server:main'],
+        'console_scripts': ['car=car.Agent:main'],
     },
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests*', 'deploy']),
