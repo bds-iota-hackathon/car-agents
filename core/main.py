@@ -12,19 +12,18 @@ seed = "FNCWNXJWJIVDGPRWNZYKOMKNIIATPPDKEVCZEWSZTEVIWJFCOUV9PJD9AUCEVQLFEAI9UBUA
 address = "DDLAERGKJZCFCICUTHTPZNACYCNCLJMBFK9OKI9BMMWXYVKBYJZRCW9CIIKFJHOCPOQHNAMOOUERZZIHD"
 
 iota = IotaWrapper(url, seed)
-if iota.connect():
-    bundle = iota.send_transfer(
-        transfers=[
-                    ProposedTransaction(
-                        address=Address("JEMEHHS9EEASH9UFOLYAKBCTNKGBADCLTKCEOEKPZVILIGTZOGYMFMWKQABVVNKHGHBHTJNRVDDMMUQOX"),
-                        value=0,
-                        message=TryteString.from_string("Damn it works in Python!"),
-                        tag=TryteString.from_string("CARSHARING")
-                    )
-        ],
-        inputs=[Address(address, key_index=0, security_level=0)]
-    )
-    if bundle is not None:
-        print "Transaction hash: {hash}".format(hash=bundle["bundle"].hash)
-else:
-    logger.info("Shutting down app")
+print iota.connect()
+print TryteString.from_string("CARSHARING")
+bundle = iota.send_transfer(
+    transfers=[
+                ProposedTransaction(
+                    address=Address("JEMEHHS9EEASH9UFOLYAKBCTNKGBADCLTKCEOEKPZVILIGTZOGYMFMWKQABVVNKHGHBHTJNRVDDMMUQOX"),
+                    value=0,
+                    message=TryteString.from_string("Damn it works in Python!"),
+                    tag=TryteString.from_string("CARSHARING")
+                )
+    ],
+    inputs=[Address(address, key_index=0, security_level=0)]
+)
+if bundle is not None:
+    print "Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible())

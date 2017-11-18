@@ -24,11 +24,9 @@ class IotaWrapper:
             logger.exception("Bad Api Response: {e}".format(e=e))
         else:
             logger.info("Connected.")
-            return True
-        return False
+            return self.__node_info
 
     def send_transfer(self, transfers, inputs=[], depth=3, min_weight_magnitude=16):
-        response = None
         try:
             if transfers is None:
                 logger.error("You need to specify transfers dummy!")
