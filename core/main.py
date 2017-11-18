@@ -1,7 +1,10 @@
 # File to test all stuff in the api
 
 from iotawrapper import IotaWrapper
+<<<<<<< HEAD
 from charging_station import ChargingStation
+=======
+>>>>>>> dd9cc42949f5d025b33735f336919fbf78d06f68
 from iota import *
 import json
 import logging
@@ -9,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Test data
-url = "https://testnet140.tangle.works:443"
+url = "http://p103.iotaledger.net:14700"
 seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
 address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
 
@@ -23,7 +26,6 @@ logger.info(iota.connect())
 #     transfers=iota.create_transfers(test_address, test_message),
 #     inputs=[Address(address, key_index=0, security_level=0)]
 # )
-
 # if bundle is not None:
 #     logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
 
