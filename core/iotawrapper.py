@@ -72,9 +72,13 @@ class IotaWrapper:
     def find_transactions(self, tags):
         try:
             response = self.__api.find_transactions(tags=tags)
+            trytes = self.__api.get_trytes(response["hashes"])
+            result = []
+            for trytestring in trytes["trytes"]:
+                result.append(Transaction.from_tryte_string(trytestring))
         except ConnectionError as e:
             logger.exception("Connection error: {e}".format(e=e))
         except BadApiResponse as e:
             logger.exception("Bad Api Response: {e}".format(e=e))
         else:
-            return response
+            return result
