@@ -1,10 +1,8 @@
 from tornado_json.requesthandlers import APIHandler
-
 from db import models
 
 
 class Search(APIHandler):
-
     def get(self):
         try:
             lan = self.get_argument('lan', None)
@@ -24,3 +22,12 @@ class Search(APIHandler):
         except:
             self.set_status(404, 'Error')
 
+
+class UpdateStation(APIHandler):
+    def post(self, station_id, status):
+        pass
+
+
+class Pay(APIHandler):
+    def post(self, address):
+        pass
