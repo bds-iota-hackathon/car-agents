@@ -66,6 +66,7 @@ function init_map() {
         var timediff = currentime - locs[j].time;
         var lat = locs[j].lat;
         var long = locs[j].long;
+
         infoWindowContent.push(['<div class="info_content">'
             + '<p>'
             + Math.round(timediff/60)
@@ -78,7 +79,7 @@ function init_map() {
             + long.toString()
             + '\/\">'
             + 'Get Directions'
-            + '</a>'])
+            + '</a> <a href = "/updateStation?id=stationID&status=FREE">  Claim </a>'])
         markers.push([locs[j].lat, locs[j].long]);
        // console.log(j)
     }
