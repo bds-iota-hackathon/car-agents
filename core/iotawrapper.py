@@ -12,7 +12,7 @@ class IotaWrapper:
         self.__seed = seed
         self.__node_info = None
         self.__api = None
-        self.__tag = "xCarx"
+        self.__tag = "PLUGINBABY"
 
     def connect(self):
         try:
@@ -30,10 +30,10 @@ class IotaWrapper:
     def get_retarded_tag(self):
         # Don't ask, I've wasted 2 hours of making this work
         # IOTA API is great. Seriously.
-        tryte_tag = TryteString.from_string(self.__tag)
+        tryte_tag = self.__tag
         while len(tryte_tag) < 27:
             tryte_tag += "9"
-        return tryte_tag
+        return Tag(tryte_tag)
 
     def create_transfers(self, address, message, value=0):
         return [
@@ -72,6 +72,8 @@ class IotaWrapper:
     def find_transactions(self, tags):
         try:
             response = self.__api.find_transactions(tags=tags)
+            if len(response["hashes"]) == 0:
+                return []
             trytes = self.__api.get_trytes(response["hashes"])
             result = []
             for trytestring in trytes["trytes"]:

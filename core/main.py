@@ -32,7 +32,7 @@ logger.info(iota.connect())
 # 1) Advertise charging station:
 def create_station(station):
     station.status = ChargingStation.FREE
-    tryte_msg = TryteString.from_string(json.dumps(station.getMessage()))
+    tryte_msg = TryteString.from_string(json.dumps(station.get_message()))
     bundle = iota.send_transfer(
         transfers=iota.create_transfers(station.owner, tryte_msg, 0),
         inputs=[Address(station.owner, key_index=0, security_level=0)]
@@ -42,7 +42,7 @@ def create_station(station):
     
 
 def search_stations(lon, lat):
-    txs = iota.find_transactions([iota.get_retarded_tag()])
+    txs = iota.find_transactions([TryteString(iota.get_retarded_tag())])
     logger.info(txs)
     for tx in txs: 
         msg = tx.signature_message_fragment
