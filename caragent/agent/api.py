@@ -115,4 +115,3 @@ class AddLocation(BaseHandler):
             self.set_status(500, "Error")
         else:
             self.set_status(200, 'OK')
-            self.write(bundle)
