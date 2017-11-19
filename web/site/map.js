@@ -14,31 +14,33 @@ function init() {
 
 function showPosition(position) {
     if (position) {
-        currLocation = {lat: position.coords.latitude, long: position.coords.latitude};
-
-        console.log("calling")
-
-        /*
-                fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
-                    .then(function (data) {
-                        console.log("response")
-                        console.log(data)
-                        locs = data
-                    })
-                    .catch(function (error) {
-                    })
-        */
-
-        $.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius: 2}, function (data) {
-            console.log("response")
-            console.log(data)
-            locs = data.data;
-            init_map();
-        })
-
-        //init_map();
-
+        currLocation = {lat: position.coords.latitude, long: position.coords.longitude};
     }
+
+    console.log("calling")
+
+    /*
+            fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+                .then(function (data) {
+                    console.log("response")
+                    console.log(data)
+                    locs = data
+                })
+                .catch(function (error) {
+                })
+    */
+
+    $.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius: 2}, function (data) {
+        console.log("response")
+        console.log(data)
+        locs = data.data;
+        console.log(locs)
+
+        init_map();
+    })
+
+    //init_map();
+
 }
 
 
@@ -48,7 +50,7 @@ function donate(owner, value) {
         console.log(data)
     })
 
-    setTimeout(function(){
+    setTimeout(function () {
         var bundle = "FANVFYWS9JITDDPI9F9YCYSSLCCFLTYLFRKSAIANXDWSU9YGSAIAOHYQ9IIZXWBCDFHHYFJYJDRQDNPNY";
         $("#pay-information").hide();
         $("#pay-link").attr("href", "https://testnet.thetangle.org/bundle/" + bundle);
@@ -184,6 +186,17 @@ function init_map() {
             + '</a></p>'
     }
 
+    console.log(locs)
+    locs.push({
+        long: currLocation.long,
+        lat: currLocation.lat,
+        id: "-1",
+        availability: "MYLOCATION",
+        price: 0,
+        owner: "",
+        address: "",
+        txid: "",
+    })
     for (j = 0; j < locs.length; j++) {
         var price = locs[j].price;
         var lat = locs[j].lat;
@@ -206,17 +219,22 @@ function init_map() {
 
     // Loop through our array of markers & place each one on the map
     for (i = 0; i < markers.length; i++) {
-        if (markers[i][3] === "free") {
+        if (markers[i][3] === "MYLOCATION") {
+            icon_url = "https://sheengroup.com.au/assets/Uploads/misc/current-location.png"
+            size = new google.maps.Size(40, 40)
+        } else if (markers[i][3] === "free") {
             icon_url = "http://mt.google.com/vt/icon?psize=25&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=44&ay=50&text=%E2%80%A2"
+            size = new google.maps.Size(20, 40)
         } else {
             icon_url = "http://mt.google.com/vt/icon?psize=25&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-b.png&ax=44&ay=50&text=%E2%80%A2"
+            new google.maps.Size(20, 40)
         }
         var position = new google.maps.LatLng(markers[i][0], markers[i][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
             map: map,
-            icon: {url: icon_url,},
+            icon: {url: icon_url, scaledSize: size},
         });
 
         // Allow each marker to have an info window
