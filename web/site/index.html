@@ -9,6 +9,8 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/bootstrap-theme.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/sb-admin-2.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="map.js"></script>
   <script src="js/bootstrap.js"></script>
@@ -17,30 +19,56 @@
 </head>
 <body>
 
-  <div class="jumbotron text-center">
-    <h1></h1>
+  <div class="page-header text-center">
+    <h3><i>PlugInBaby</i></h3>
   </div>
 
-  <div class="container">
-    <fieldset>
-      <form action="/" method="post">
-        <input type="submit" class="ghost-button" value="Find me a space! →">
-      </form>
-    </fieldset>
+  <div class="container" id="station-container" hidden>
+    <div class="panel">
+      <div class="panel-body">
+        <div class="col-md-12">
+
+          <div class="col-md-5 col-sm-6">
+            <h4 class="control-label">
+              Your current balance
+            </h4>
+          </div>
+          <div class="col-md-7 col-sm-6">
+            <span id="balance"></span>
+          </div>
+
+          <div class="col-md-5 col-sm-6">
+            <h4 class="control-label">
+              Price
+            </h4>
+          </div>
+          <div class="col-md-7 col-sm-6">
+            <span id="price"></span>
+          </div>
+
+          <div class="col-md-5 col-sm-6">
+            <button id="charing-btn" class="btn btn-md btn-primary">
+              Start Charging
+            </button>
+            <div id="progress-bar" class="progress" hidden>
+              <div class="progress-bar progress-bar-success" role="progressbar"
+                   aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="">
+                0%
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 
-   <div class="container">
-    <fieldset>
-      <form action="/" method="post">
-        
-        <input type="submit" class="ghost-button" value="Found a place? Price it! →">
-        <input name="city" type="text" class="ghost-input" placeholder="Enter amount" required>
-      </form>
-    </fieldset>
+
+  <div class="container" id="map-container">
+    <div id="map_wrapper" style='height: 400px'>
+      <div id="map_canvas" class="mapping" style="width: 100%; height: 100%"></div>
+    </div>
   </div>
 
-  <div id="map_wrapper" style='height: 400px'>
-    <div id="map_canvas" class="mapping" style="width: 100%; height: 100%"></div>
-  </div>
 </body>
 </html>
