@@ -72,12 +72,17 @@ class IotaWrapper:
             return response
 
     # For now looking only using tag, for hackathon needs
+    # IOTA's find_transaction can't filter by time.
+    def get_app_transactions(self):
+        response = self.__api.find_transactions(tags=[TryteString(IotaWrapper.get_tag())])
+
+        if len(response["hashes"]) < 1:
+            return []
+        return self.__api.get_trytes(response["hashes"])
+
     def find_transactions(self, lon, lat, radius):
         try:
-            response = self.__api.find_transactions(tags=[TryteString(IotaWrapper.get_tag())])
-            if len(response["hashes"]) == 0:
-                return []
-            trytes = self.__api.get_trytes(response["hashes"])
+            trytes = self.get_app_transactions()
             txs = []
             for trytestring in trytes["trytes"]:
                 transaction = Transaction.from_tryte_string(trytestring)
