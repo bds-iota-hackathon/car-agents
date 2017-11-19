@@ -38,10 +38,8 @@ function show_station_details() {
     $("#payment-address").text(station.owner);
 
     $("#charing-btn").click(function () {
-            loader_bar().then(function() {
-                $("#pay-btn").toggleClass('hide');
-            });
-        } 
+            loader_bar();
+        }
     )
 
     // TODO pay
