@@ -38,10 +38,10 @@ setup(
     maintainer_email='',
 
     scripts=[
-        'car/Agent.py'
+        'caragent/Agent.py'
     ],
     entry_points = {
-        'console_scripts': ['car=car.Agent:main'],
+        'console_scripts': ['car=caragent.Agent:main'],
     },
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests*', 'deploy']),
