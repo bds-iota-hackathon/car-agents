@@ -8,12 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 class IotaWrapper:
+    IOTA_TAG = "PLUGINBABY"
+
     def __init__(self, url, seed):
         self.__url = url
         self.__seed = seed
         self.__node_info = None
         self.__api = None
-        self.__tag = "PLUGINBABY"
 
     def connect(self):
         try:
@@ -28,12 +29,10 @@ class IotaWrapper:
             logger.info("Connected.")
             return self.__node_info
 
-    def get_retarded_tag(self):
-        # Don't ask, I've wasted 2 hours of making this work
-        # IOTA API is great. Seriously.
-        tryte_tag = self.__tag
-        while len(tryte_tag) < 27:
-            tryte_tag += "9"
+    @staticmethod
+    def get_tag():
+        tryte_tag = IotaWrapper.IOTA_TAG
+        tryte_tag += '9' * (27 - len(tryte_tag))
         return Tag(tryte_tag)
 
     def create_transfers(self, address, message, value=0):
@@ -47,7 +46,7 @@ class IotaWrapper:
                 address=Address(address),
                 value=value,
                 message=TryteString.from_string(message),
-                tag=self.get_retarded_tag()
+                tag=self.get_tag()
             )
         ]
 
@@ -75,7 +74,7 @@ class IotaWrapper:
     # For now looking only using tag, for hackathon needs
     def find_transactions(self, lon, lat, radius):
         try:
-            response = self.__api.find_transactions(tags=[TryteString(self.get_retarded_tag())])
+            response = self.__api.find_transactions(tags=[TryteString(IotaWrapper.get_tag())])
             if len(response["hashes"]) == 0:
                 return []
             trytes = self.__api.get_trytes(response["hashes"])

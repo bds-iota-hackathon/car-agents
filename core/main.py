@@ -28,7 +28,7 @@ logger.info(iota.connect())
 #     logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
 
 # logger.info("Trying to get message by tag")
-# logger.info(iota.find_transactions([iota.get_retarded_tag()]))
+# logger.info(iota.find_transactions([IotaWrapper.get_tag()]))
 
 # 1) Advertise charging station:
 def create_station(station):
