@@ -1,9 +1,15 @@
 from tornado_json.requesthandlers import APIHandler
 from caragent.model.message import Message
 from caragent.model.response import Response
+from core import charging_station
 
 
-class Search(APIHandler):
+class BaseHandler(APIHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+
+
+class Search(BaseHandler):
     def get(self):
         try:
             lat = self.get_argument("lat", None)
@@ -14,6 +20,7 @@ class Search(APIHandler):
                 raise Exception("Crap values")
 
             response = self.application.iota.find_transactions(float(lon), float(lat), float(radius))
+            
         except Exception as e:
             self.set_status(404, "Error: {e}".format(e=e))
         else:
@@ -21,7 +28,7 @@ class Search(APIHandler):
             self.write(Response(response).to_json())
 
 
-class UpdateStation(APIHandler):
+class UpdateStation(BaseHandler):
     def get(self):
         status = self.get_argument('status', None)
         id = self.get_argument('id', None)
@@ -47,7 +54,7 @@ class UpdateStation(APIHandler):
 
 
 # returns bundle hash
-class Pay(APIHandler):
+class Pay(BaseHandler):
     def get(self):
         out_address = self.get_argument('out', None)
         in_address = self.get_argument('in', None)
@@ -74,3 +81,17 @@ class Pay(APIHandler):
                     self.write(response.to_json())
                     return
         self.set_status(404, 'Error')
+
+'''
+class AddLocation(APIHandler):
+    def get(self):
+        station = charging_station.ChargingStation
+
+        tryte_msg = TryteString.from_string(json.dumps(station.get_message()))
+        bundle = self.application.iota.send_transfer(
+            transfers=iota.create_transfers(station.owner, tryte_msg, 0),
+            inputs=[Address(station.owner, key_index=0, security_level=0)]
+        )
+        if bundle is not None:
+            logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
+'''
