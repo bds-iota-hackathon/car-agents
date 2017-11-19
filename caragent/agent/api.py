@@ -43,10 +43,29 @@ class UpdateStation(APIHandler):
 
         if bundle is not None:
             self.set_status(200, 'OK')
-            return
         self.set_status(404, 'Error')
 
 
 class Pay(APIHandler):
-    def post(self, address):
-        pass
+    def get(self):
+        out_address = self.get_argument('outaddress', None)
+        in_address = self.get_argument('inaddress', None)
+        value = self.get_argument('value', 0)
+
+        if out_address is None or in_address is None or value is None:
+            print "wtf"
+            self.set_status(404, 'Error')
+            return
+        bundle = self.application.iota.send_transfer(
+            transfers=self.application.iota.create_transfers(
+                in_address,
+                "{}",
+                value=int(value)
+            ),
+            inputs=self.application.iota.create_inputs(out_address)
+        )
+
+        if bundle is not None:
+            print bundle["bundle"].as_json_compatible()
+            return
+        self.set_status(404, 'Error')

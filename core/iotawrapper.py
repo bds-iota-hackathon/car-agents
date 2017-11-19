@@ -41,7 +41,7 @@ class IotaWrapper:
             ProposedTransaction(
                 # All hail the glory of IOTA and their dummy transactions for tag retrieval.
                 address=Address("SQAZ9SXUWMPPVHKIWMZWZXSFLPURWIFTUEQCMKGJAKODCMOGCLEAQQQH9BKNZUIFKLOPKRVHDJMBTBFYW"),
-                value = value
+                value = 0
             ),
             ProposedTransaction(
                 address=Address(address),
@@ -52,7 +52,7 @@ class IotaWrapper:
         ]
 
     def create_inputs(self, address):
-        return [Address(address, key_index=0, security_level=0)]
+        return [Address(address, key_index=0, security_level=2)]
 
     def send_transfer(self, transfers, inputs=[], depth=3, min_weight_magnitude=16):
         try:
@@ -81,7 +81,13 @@ class IotaWrapper:
             trytes = self.__api.get_trytes(response["hashes"])
             txs = []
             for trytestring in trytes["trytes"]:
-                txs.append(Transaction.from_tryte_string(trytestring))
+                transaction = Transaction.from_tryte_string(trytestring)
+
+                print transaction.timestamp
+                print get_current_timestamp()
+
+                if transaction.timestamp > get_current_timestamp() - 1800:
+                    txs.append(transaction)
 
         except ConnectionError as e:
             logger.exception("Connection error: {e}".format(e=e))

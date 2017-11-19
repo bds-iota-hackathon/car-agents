@@ -2,7 +2,7 @@
 
 **Output schemas only represent `data` and not the full output; see output examples and the JSend specification.**
 
-# /api/pay/\(?P\<address\>\[a\-zA\-Z0\-9\_\\\-\]\+\)/?$
+# /api/pay/?
 
     Content-Type: application/json
 
