@@ -45,10 +45,11 @@ function showPosition(position) {
 
 
 function donate(owner, value) {
+
     console.log("paying")
-    //$.get("http://10.0.61.162:8888/api/pay", {out: addr, in: owner, value: value}, function (data) {
-    //    console.log(data)
-    //})
+    $.get("http://10.0.61.162:8888/api/pay", {out: addr, in: owner, value: value}, function (data) {
+        console.log(data)
+    })
 
     setTimeout(function () {
         var bundle = "FANVFYWS9JITDDPI9F9YCYSSLCCFLTYLFRKSAIANXDWSU9YGSAIAOHYQ9IIZXWBCDFHHYFJYJDRQDNPNY";
@@ -62,6 +63,7 @@ function donate(owner, value) {
 };
 
 function show_station_details() {
+    $("#logo").hide()
     var station = locs[$("#station-button").attr("data-address")];
 
     // TODO mark station as occupied
@@ -99,7 +101,7 @@ function loader_bar(station) {
             .css("width", value + "%")
             .attr("aria-valuenow", value)
             .text(value + "%");
-        $("#total-price").text(Math.round(price * value * 100) / 100 + " IOTA");
+        $("#total-price").text(Math.round(price * value * 100) / 100 + " MIOTA");
         if (value >= 100) {
             clearInterval(interval);
             $("#charging-text").hide();
@@ -108,6 +110,7 @@ function loader_bar(station) {
             $("#pay-information").show();
 
             donate(station.owner, price * value);
+
 
         }
     }, 500);

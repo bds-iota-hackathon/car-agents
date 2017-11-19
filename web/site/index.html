@@ -19,10 +19,11 @@
 </head>
 <body>
 
-<div class="page-header text-center">
-    <h3><i>PlugInBaby</i></h3>
+<div class="pink-background">
+    <div class="page-header text-center padding-top">
+        <h3><i>PlugInBaby</i></h3>
+    </div>
 </div>
-
 <div class="container text-center" id="station-container" hidden>
     <div class="panel">
         <div class="panel-body">
@@ -39,7 +40,7 @@
 
                 <div class="col-md-5 col-sm-6">
                     <h4 class="control-label">
-                        Price
+                        Price (mi/min)
                     </h4>
                 </div>
                 <div class="col-md-7 col-sm-6">
@@ -55,7 +56,7 @@
                     <span id="total-price">0</span>
                 </div>
 
-                <div class="col-md-5 col-sm-6">
+                <div id="charge-info" class="col-md-5 col-sm-6">
                     <button id="charing-btn" class="btn btn-md btn-primary">
                         Start Charging
                     </button>
@@ -72,10 +73,10 @@
             </div>
             <div class="col-md-5 col-sm-6 small-margin-top text-center" id="pay-information" hidden>
                 <div class="col-md-12 text-center">
-                    <p>You are paying <span id="pay-info"></span> IOTA </p>
+                    <p>You are paying <span id="pay-info"></span> MIOTA </p>
                     <p>Payment is now being processed</p>
                 </div>
-                <div class=" div-center loader" ></div>
+                <div class=" div-center loader"></div>
             </div>
 
             <div class="col-md-5 col-sm-6 small-margin-top text-center" id="pay-success" hidden>
@@ -94,5 +95,8 @@
     </div>
 </div>
 
+<div class="container text-center top-margin" id="logo">
+    <img src="images/logo.png" height="100px">
+</div>
 </body>
 </html>
