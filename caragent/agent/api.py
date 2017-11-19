@@ -11,6 +11,7 @@ class BaseHandler(APIHandler):
 
 class Search(BaseHandler):
     def get(self):
+        print "Search request received from {addr}".format(addr=self.application.address)
         try:
             lat = self.get_argument("lat", None)
             lon = self.get_argument("lon", None)
@@ -61,6 +62,8 @@ class Pay(BaseHandler):
         in_address = self.get_argument('in', None)
         value = self.get_argument('value', 0)
 
+        print "Payment request received from {addr}".format(addr=self.application.address)
+
         if out_address is None or in_address is None or value is None:
             self.set_status(404, 'Error')
             return
@@ -85,6 +88,7 @@ class Pay(BaseHandler):
 
 class GetBalance(BaseHandler):
     def get(self):
+        print "Balance request received from {addr}".format(addr=self.application.address)
         try:
             address = self.get_argument('address', None)
             if address is None:
