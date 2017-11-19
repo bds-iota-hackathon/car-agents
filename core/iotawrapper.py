@@ -83,9 +83,6 @@ class IotaWrapper:
             for trytestring in trytes["trytes"]:
                 transaction = Transaction.from_tryte_string(trytestring)
 
-                print transaction.timestamp
-                print get_current_timestamp()
-
                 if transaction.timestamp > get_current_timestamp() - 1800:
                     txs.append(transaction)
 
@@ -94,7 +91,7 @@ class IotaWrapper:
         except BadApiResponse as e:
             logger.exception("Bad Api Response: {e}".format(e=e))
         else:
-            msg_dicts = [json.loads(msg.signature_message_fragment.as_string()) for msg in txs]
+            msg_dicts = [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
             return [msg for msg in msg_dicts if self._within(msg, lon, lat, radius)]
 
     def _within(self, txd, lon, lat, radius):

@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # File to test all stuff in the api
 
 from iotawrapper import IotaWrapper
@@ -13,7 +14,7 @@ url = "http://p103.iotaledger.net:14700"
 seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
 address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
 
-iota = IotaWrapper(url, seed, address)
+iota = IotaWrapper(url, seed)
 logger.info(iota.connect())
 
 # logger.info("Trying to add transaction")
@@ -65,4 +66,5 @@ id = "Teststation"
 station = ChargingStation(lon, lat, price, id, vendor_address)
 
 #create_station(station)
-search_stations(0.1, 20)
+# search_stations(0.1, 20)
+print iota.find_transactions(18, 54, 2)
