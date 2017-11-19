@@ -46,10 +46,11 @@ class UpdateStation(APIHandler):
         self.set_status(404, 'Error')
 
 
+# returns bundle hash
 class Pay(APIHandler):
     def get(self):
-        out_address = self.get_argument('outaddress', None)
-        in_address = self.get_argument('inaddress', None)
+        out_address = self.get_argument('out', None)
+        in_address = self.get_argument('in', None)
         value = self.get_argument('value', 0)
 
         if out_address is None or in_address is None or value is None:
@@ -66,6 +67,10 @@ class Pay(APIHandler):
         )
 
         if bundle is not None:
-            print bundle["bundle"].as_json_compatible()
-            return
+            for transaction in bundle["bundle"]:
+                if transaction.value == float(value):
+                    response = Response(str(transaction.bundle_hash))
+                    self.set_status(200, "OK")
+                    self.write(response.to_json())
+                    return
         self.set_status(404, 'Error')
