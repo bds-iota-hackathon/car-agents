@@ -12,6 +12,7 @@ class IotaWrapper:
         self.__seed = seed
         self.__node_info = None
         self.__api = None
+        self.__tag = "xCarx"
 
     def connect(self):
         try:
@@ -25,6 +26,29 @@ class IotaWrapper:
         else:
             logger.info("Connected.")
             return self.__node_info
+
+    def get_retarded_tag(self):
+        # Don't ask, I've wasted 2 hours of making this work
+        # IOTA API is great. Seriously.
+        tryte_tag = TryteString.from_string(self.__tag)
+        while len(tryte_tag) < 27:
+            tryte_tag += "9"
+        return tryte_tag
+
+    def create_transfers(self, address, message, value=0):
+        return [
+            ProposedTransaction(
+                # All hail the glory of IOTA and their dummy transactions for tag retrieval.
+                address=Address("SQAZ9SXUWMPPVHKIWMZWZXSFLPURWIFTUEQCMKGJAKODCMOGCLEAQQQH9BKNZUIFKLOPKRVHDJMBTBFYW"),
+                value = value
+            ),
+            ProposedTransaction(
+                address=Address(address),
+                value=value,
+                message=message,
+                tag=self.get_retarded_tag()
+            )
+        ]
 
     def send_transfer(self, transfers, inputs=[], depth=3, min_weight_magnitude=16):
         try:
@@ -46,4 +70,15 @@ class IotaWrapper:
 
     # For now looking only using tag, for hackathon needs
     def find_transactions(self, tags):
-        return self.__api.find_transactions(tags=tags)
+        try:
+            response = self.__api.find_transactions(tags=tags)
+            trytes = self.__api.get_trytes(response["hashes"])
+            result = []
+            for trytestring in trytes["trytes"]:
+                result.append(Transaction.from_tryte_string(trytestring))
+        except ConnectionError as e:
+            logger.exception("Connection error: {e}".format(e=e))
+        except BadApiResponse as e:
+            logger.exception("Bad Api Response: {e}".format(e=e))
+        else:
+            return result
