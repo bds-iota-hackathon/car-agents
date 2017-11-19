@@ -54,7 +54,6 @@ class Pay(APIHandler):
         value = self.get_argument('value', 0)
 
         if out_address is None or in_address is None or value is None:
-            print "wtf"
             self.set_status(404, 'Error')
             return
         bundle = self.application.iota.send_transfer(
@@ -79,7 +78,11 @@ class Pay(APIHandler):
 class GetBalance(APIHandler):
     def get(self):
         try:
-            balance = self.application.iota.get_balance(self.application.address)
+            address = self.get_argument('address', None)
+            if address is None:
+                self.set_status(404, 'Error')
+                return
+            balance = self.application.iota.get_balance(address)
             response = Response(balance)
         except Exception as e:
             self.set_status(404, "Error")
