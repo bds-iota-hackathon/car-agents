@@ -8,12 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 class IotaWrapper:
+    IOTA_TAG = "PLUGINBABY"
+
     def __init__(self, url, seed):
         self.__url = url
         self.__seed = seed
         self.__node_info = None
         self.__api = None
-        self.__tag = "PLUGINBABY"
 
     def connect(self):
         try:
@@ -28,12 +29,10 @@ class IotaWrapper:
             logger.info("Connected.")
             return self.__node_info
 
-    def get_retarded_tag(self):
-        # Don't ask, I've wasted 2 hours of making this work
-        # IOTA API is great. Seriously.
-        tryte_tag = self.__tag
-        while len(tryte_tag) < 27:
-            tryte_tag += "9"
+    @staticmethod
+    def get_tag():
+        tryte_tag = IotaWrapper.IOTA_TAG
+        tryte_tag += '9' * (27 - len(tryte_tag))
         return Tag(tryte_tag)
 
     def create_transfers(self, address, message, value=0):
@@ -47,7 +46,7 @@ class IotaWrapper:
                 address=Address(address),
                 value=value,
                 message=TryteString.from_string(message),
-                tag=self.get_retarded_tag()
+                tag=self.get_tag()
             )
         ]
 
@@ -73,18 +72,20 @@ class IotaWrapper:
             return response
 
     # For now looking only using tag, for hackathon needs
+    # IOTA's find_transaction can't filter by time.
+    def get_app_transactions(self):
+        response = self.__api.find_transactions(tags=[TryteString(IotaWrapper.get_tag())])
+
+        if len(response["hashes"]) < 1:
+            return []
+        return self.__api.get_trytes(response["hashes"])
+
     def find_transactions(self, lon, lat, radius):
         try:
-            response = self.__api.find_transactions(tags=[TryteString(self.get_retarded_tag())])
-            if len(response["hashes"]) == 0:
-                return []
-            trytes = self.__api.get_trytes(response["hashes"])
+            trytes = self.get_app_transactions()
             txs = []
             for trytestring in trytes["trytes"]:
                 transaction = Transaction.from_tryte_string(trytestring)
-
-                print transaction.timestamp
-                print get_current_timestamp()
 
                 if transaction.timestamp > get_current_timestamp() - 1800:
                     txs.append(transaction)
@@ -94,8 +95,19 @@ class IotaWrapper:
         except BadApiResponse as e:
             logger.exception("Bad Api Response: {e}".format(e=e))
         else:
-            msg_dicts = [json.loads(msg.signature_message_fragment.as_string()) for msg in txs]
+            msg_dicts = [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
             return [msg for msg in msg_dicts if self._within(msg, lon, lat, radius)]
+
+    def get_balance(self, address):
+        try:
+            response = self.__api.get_balances([Address(address)])
+            if "balances" in response:
+                return response["balances"][0]
+            raise BadApiResponse
+        except ConnectionError as e:
+            logger.exception("Connection error: {e}".format(e=e))
+        except BadApiResponse as e:
+            logger.exception("Bad Api Response: {e}".format(e=e))
 
     def _within(self, txd, lon, lat, radius):
         if "long" not in txd or "lat" not in txd:

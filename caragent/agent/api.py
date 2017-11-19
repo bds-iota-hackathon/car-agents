@@ -61,7 +61,6 @@ class Pay(BaseHandler):
         value = self.get_argument('value', 0)
 
         if out_address is None or in_address is None or value is None:
-            print "wtf"
             self.set_status(404, 'Error')
             return
         bundle = self.application.iota.send_transfer(
@@ -82,16 +81,18 @@ class Pay(BaseHandler):
                     return
         self.set_status(404, 'Error')
 
-'''
-class AddLocation(APIHandler):
-    def get(self):
-        station = charging_station.ChargingStation
 
-        tryte_msg = TryteString.from_string(json.dumps(station.get_message()))
-        bundle = self.application.iota.send_transfer(
-            transfers=iota.create_transfers(station.owner, tryte_msg, 0),
-            inputs=[Address(station.owner, key_index=0, security_level=0)]
-        )
-        if bundle is not None:
-            logger.info("Bundle: {hash}".format(hash=bundle["bundle"].as_json_compatible()))
-'''
+class GetBalance(APIHandler):
+    def get(self):
+        try:
+            address = self.get_argument('address', None)
+            if address is None:
+                self.set_status(404, 'Error')
+                return
+            balance = self.application.iota.get_balance(address)
+            response = Response(balance)
+        except Exception as e:
+            self.set_status(404, "Error")
+        else:
+            self.set_status(200, "OK")
+            self.write(response.to_json())

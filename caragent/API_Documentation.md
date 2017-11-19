@@ -2,6 +2,15 @@
 
 **Output schemas only represent `data` and not the full output; see output examples and the JSend specification.**
 
+# /api/getbalance/?
+
+    Content-Type: application/json
+
+
+
+<br>
+<br>
+
 # /api/pay/?
 
     Content-Type: application/json

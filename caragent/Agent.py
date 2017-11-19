@@ -31,8 +31,8 @@ class Application(tornado_json.application.Application):
         super(Application, self).__init__(routes=routes, generate_docs=True, settings=settings)
 
         self.ulr = "http://p103.iotaledger.net:14700"
-        self.address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXPEZWIMHB9JPEXSE9SFLA"
-        self.seed = "OJJUQWUWCW9LXFBGHIUGXQTUYYOAHJIQMJBBPOHBHCLBYDUMXLNLSUQJLNFMBITGSXGNLPFABLTQDXBM9"
+        self.address = "U9Y9PVIBHONULDYBMY9IXBUAZEGINTZQZOTFIXYECBBPNQXBBOTQOZPCIPQLROKWJJ9UWDTUBTNQVO9RD"
+        self.seed = "QXCAMQVJXGIVZUZMYJZAPFYAFXCCBOBPYDKKUVJDJNNQAEF9NQOIGMAKGGMJLDLMMSTOBAL9PNNUNPIVM"
 
         self.iota = IotaWrapper(self.ulr, self.seed)
         self.iota.connect()
