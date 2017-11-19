@@ -97,6 +97,7 @@ class GetBalance(APIHandler):
             self.set_status(200, "OK")
             self.write(response.to_json())
 
+
 class AddLocation(APIHandler):
     def get(self):
         try:
@@ -107,18 +108,11 @@ class AddLocation(APIHandler):
             owner = self.get_argument("owner")
 
             station = charging_station.ChargingStation(longitude, latitude, price, id, owner)
-
-            message = Message(
-                parameters=station
-            )
-
-            bundle = self.application.iota.send_transfer(
-                transfers=self.application.iota.create_transfers(station.owner, message, 0),
-                inputs=self.application.iota.create_inputs(station.owner)
-            )
+            bundle = station.advertise_free(self.application.iota)
             if bundle is None:
                 raise Exception
         except Exception as e:
-            self.set_status(404, "Error")
+            self.set_status(500, "Error")
         else:
             self.set_status(200, 'OK')
+            self.write(bundle)
