@@ -26,6 +26,7 @@ class Search(BaseHandler):
         except Exception as e:
             self.set_status(404, "Error: {e}".format(e=e))
         else:
+            print Response(response).to_json()
             self.set_status(200, "OK")
             self.write(Response(response).to_json())
 
