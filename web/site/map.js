@@ -39,8 +39,7 @@ function show_station_details() {
 
     $("#charing-btn").click(function () {
         loader_bar(station.price)
-        } 
-    )
+    })
 
     // TODO pay
     // "/pay?address="+station.address
