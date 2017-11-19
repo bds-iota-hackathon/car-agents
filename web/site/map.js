@@ -1,20 +1,48 @@
 var currLocation;
 locs = {};
 
+url = "//10.0.61.162:8888";
+
 function init() {
     navigator.geolocation.getCurrentPosition(showPosition)
 };
 
 function showPosition(position) {
+
     if (position) {
         currLocation = {lat: position.coords.latitude, long: position.coords.latitude};
-        init_map();
-    }
-};
 
-function advertiseSlot() {
-// TODO: advertiseSlot
-};
+        console.log("calling")
+
+/*
+        fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+            .then(function (data) {
+                console.log("response")
+                console.log(data)
+                locs = data
+            })
+            .catch(function (error) {
+            })
+*/
+        $.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius:2}, function(data){   console.log("response")
+            console.log(data)
+            locs = data.data;
+            init_map();
+        })
+
+/*
+        console.log(url)
+        $.get("http://10.0.61.162:8888/api/search", {lat: currLocation.lat, long: currLocation.long, radius:1},
+            function(data){
+            console.log("response")
+            locs = data;
+            init_map();
+        }, function(error){
+                console.log("error")
+            });
+*/
+    }
+}
 
 var balance = 2000;
 
@@ -41,7 +69,7 @@ function show_station_details() {
             $("#charing-btn").hide();
             $("#progress-bar").show();
 
-            for(i = 0; i <= 100; i+=1){
+            for (i = 0; i <= 100; i += 1) {
 
                 $("#progress-bar").css("width", i + "%");
                 $("#progress-bar").text(i + "%");
@@ -53,7 +81,8 @@ function show_station_details() {
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
-    locs = [{
+    /**
+     locs = [{
         availability: "free",
         price: 0.01, // Given in milli iota
         long: -0.119562,
@@ -63,22 +92,22 @@ function init_map() {
         txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
         id: "asjkdasd"
     },
-        {
-            availability: "occupied",
-            price: 0.01, // Given in milli iota
-            long: -0.119580,
-            lat: 51.503474,
-            owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
-            address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
-            txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
-            id: "asjkdasd"
-        }];
-
-    // fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
-    //     .then(function(data){
-    //         locs = data
-    //     })
-    //     .catch(function(error) {})
+     {
+         availability: "occupied",
+         price: 0.01, // Given in milli iota
+         long: -0.119580,
+         lat: 51.503474,
+         owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
+         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
+         txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
+         id: "asjkdasd"
+     }];
+     */
+        // fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+        //     .then(function(data){
+        //         locs = data
+        //     })
+        //     .catch(function(error) {})
 
     var map;
     var bounds = new google.maps.LatLngBounds();
