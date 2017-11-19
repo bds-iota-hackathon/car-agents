@@ -82,7 +82,7 @@ class Pay(BaseHandler):
         self.set_status(404, 'Error')
 
 
-class GetBalance(APIHandler):
+class GetBalance(BaseHandler):
     def get(self):
         try:
             address = self.get_argument('address', None)
@@ -98,7 +98,7 @@ class GetBalance(APIHandler):
             self.write(response.to_json())
 
 
-class AddLocation(APIHandler):
+class AddLocation(BaseHandler):
     def get(self):
         try:
             longitude = self.get_argument("longitude")
