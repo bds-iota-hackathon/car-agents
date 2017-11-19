@@ -7,7 +7,7 @@ function init() {
 
 function showPosition(position) {
     if (position) {
-        currLocation = {lat: position.coords.latitude, long: position.coords.latitude};
+        currLocation = {lat: position.coords.latitude, long: position.coords.longitude};
         init_map();
     }
 };
