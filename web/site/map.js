@@ -14,7 +14,7 @@ function init() {
 
 function showPosition(position) {
     if (position) {
-        currLocation = {lat: position.coords.latitude, long: position.coords.longitude};
+        currLocation = {lat: 54.4046698, long: 18.576004600000033}
     }
 
     console.log("calling")
@@ -46,9 +46,9 @@ function showPosition(position) {
 
 function donate(owner, value) {
     console.log("paying")
-    $.get("http://10.0.61.162:8888/api/pay", {out: addr, in: owner, value: value}, function (data) {
-        console.log(data)
-    })
+    //$.get("http://10.0.61.162:8888/api/pay", {out: addr, in: owner, value: value}, function (data) {
+    //    console.log(data)
+    //})
 
     setTimeout(function () {
         var bundle = "FANVFYWS9JITDDPI9F9YCYSSLCCFLTYLFRKSAIANXDWSU9YGSAIAOHYQ9IIZXWBCDFHHYFJYJDRQDNPNY";
@@ -56,6 +56,7 @@ function donate(owner, value) {
         $("#pay-link").attr("href", "https://testnet.thetangle.org/bundle/" + bundle);
         $("#pay-success").show();
         balance -= value;
+        $("#balance").text(balance)
     }, 10000)
 
 };
@@ -162,7 +163,7 @@ function init_map() {
 
 
     function show_directions_link(lat, long) {
-        return '<a href=\"https://www.google.com/maps/place/'
+        return '<a target="_blank" href=\"https://www.google.com/maps/place/'
             + lat.toString()
             + '+'
             + long.toString()
@@ -178,9 +179,9 @@ function init_map() {
             + '</p>'
     }
 
-    function show_testnet_link(txid) {
-        return '<p><a target="_blank" href=\"https://testnet.thetangle.org/transaction/'
-            + txid
+    function show_testnet_link(owner) {
+        return '<p><a target="_blank" href=\"https://testnet.thetangle.org/address/'
+            + owner
             + '\/\">'
             + "View in Tangle Explorer"
             + '</a></p>'
@@ -191,7 +192,7 @@ function init_map() {
         long: currLocation.long,
         lat: currLocation.lat,
         id: "-1",
-        availability: "MYLOCATION",
+        status: "MYLOCATION",
         price: 0,
         owner: "",
         address: "",
@@ -202,13 +203,13 @@ function init_map() {
         var lat = locs[j].lat;
         var long = locs[j].long;
         var status = locs[j].status;
-        var txid = locs[j].txid;
+        var owner = locs[j].owner;
         infoWindowContent.push([
             '<div class="info_content">'
             + show_price(price)
             + '<p>(' + status + ')</p>'
             + show_directions_link(lat, long)
-            + show_testnet_link(txid)
+            + show_testnet_link(owner)
             + '    <div class="div-center col-md-2 col-sm-2">\n' +
             '      <button id="station-button" data-address="' + j + '" onclick="show_station_details()" class="btn btn-success btn-md">I\'m There!</button>\n' +
             '    </div>'
