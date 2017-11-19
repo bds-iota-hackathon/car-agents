@@ -19,7 +19,8 @@ class Search(BaseHandler):
                 print "Something is bad"
                 raise Exception("Crap values")
 
-            response = self.application.iota.find_transactions(float(lon), float(lat), float(radius))
+            #response = self.application.iota.find_transactions(float(lon), float(lat), float(radius))
+            response = self.application.iota.find_transactions_local()
             
         except Exception as e:
             self.set_status(404, "Error: {e}".format(e=e))
