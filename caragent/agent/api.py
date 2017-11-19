@@ -1,6 +1,7 @@
 from tornado_json.requesthandlers import APIHandler
 from caragent.model.message import Message
 from caragent.model.response import Response
+from core import charging_station
 
 
 class Search(APIHandler):
@@ -89,3 +90,29 @@ class GetBalance(APIHandler):
         else:
             self.set_status(200, "OK")
             self.write(response.to_json())
+
+class AddLocation(APIHandler):
+    def get(self):
+        try:
+            longitude = self.get_argument("longitude")
+            latitude = self.get_argument("latitude")
+            price = self.get_argument("price")
+            id = self.get_argument("id")
+            owner = self.get_argument("owner")
+
+            station = charging_station.ChargingStation(longitude, latitude, price, id, owner)
+
+            message = Message(
+                parameters=station
+            )
+
+            bundle = self.application.iota.send_transfer(
+                transfers=self.application.iota.create_transfers(station.owner, message, 0),
+                inputs=self.application.iota.create_inputs(station.owner)
+            )
+            if bundle is None:
+                raise Exception
+        except Exception as e:
+            self.set_status(404, "Error")
+        else:
+            self.set_status(200, 'OK')
