@@ -12,10 +12,6 @@ function showPosition(position) {
     }
 };
 
-function advertiseSlot() {
-// TODO: advertiseSlot
-};
-
 var balance = 2000;
 
 
@@ -31,6 +27,10 @@ function donate(address) {
 
 function show_station_details() {
     var station = locs[$("#station-button").attr("data-address")];
+
+    // TODO mark station as occupied
+    // fetch("/updateStation?id="+station.id+"&status=occupied")
+
     $("#map-container").hide();
     $("#station-container").show();
     $("#balance").text(balance);
@@ -48,6 +48,13 @@ function show_station_details() {
             }
         }
     )
+
+    // TODO pay
+    // "/pay?address="+station.address
+
+    // TODO mark station as free
+    // /updateStation?id="+station.id+"&status=occupied
+
 }
 
 function init_map() {
@@ -138,7 +145,6 @@ function init_map() {
             + '    <div class="div-center col-md-2 col-sm-2">\n' +
             '      <button id="station-button" data-address="' + j + '" onclick="show_station_details()" class="btn btn-success btn-md">I\'m There!</button>\n' +
             '    </div>'
-            // + '<a href = "/updateStation?id=stationID&status=FREE">  Claim </a>'
             + '</div>\n'
         ])
         markers.push([locs[j].lat, locs[j].long, price, status]);
