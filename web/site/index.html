@@ -23,7 +23,7 @@
     <h3><i>PlugInBaby</i></h3>
 </div>
 
-<div class="container" id="station-container" hidden>
+<div class="container text-center" id="station-container" hidden>
     <div class="panel">
         <div class="panel-body">
             <div class="col-md-12">
@@ -39,11 +39,20 @@
 
                 <div class="col-md-5 col-sm-6">
                     <h4 class="control-label">
-                        Price (mi/min)
+                        Price
                     </h4>
                 </div>
                 <div class="col-md-7 col-sm-6">
                     <span id="price"></span>
+                </div>
+
+                <div class="col-md-5 col-sm-6">
+                    <h4 class="control-label">
+                        Total price
+                    </h4>
+                </div>
+                <div class="col-md-7 col-sm-6">
+                    <span id="total-price">0</span>
                 </div>
 
                 <div class="col-md-5 col-sm-6">
@@ -56,20 +65,28 @@
                             Progress
                         </div>
                     </div>
-                </div>
+                    <p id="charging-text" class="orange" hidden>Charging...</p>
+                    <p id="charged-text" class="green" hidden>Fully Charged</p>
 
-                <div class="col-md-5 col-sm-6" id="pay-information" hidden>
-                    <div class="col-md-12 text-center">
-                        <p>You are paying <span id="pay-info"></span> MIOTA </p>
-                        <p>Payment is being processed</p>
-                    </div>
                 </div>
+            </div>
+            <div class="col-md-5 col-sm-6 small-margin-top text-center" id="pay-information" hidden>
+                <div class="col-md-12 text-center">
+                    <p>You are paying <span id="pay-info"></span> IOTA </p>
+                    <p>Payment is now being processed</p>
+                </div>
+                <div class=" div-center loader" ></div>
+            </div>
 
+            <div class="col-md-5 col-sm-6 small-margin-top text-center" id="pay-success" hidden>
+                <div class="col-md-12 text-center">
+                    <h4 class="green">Payment issued</h4>
+                </div>
+                <a target="_blank" href="" id="pay-link">View transaction</a>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="container" id="map-container">
     <div id="map_wrapper" style='height: 400px'>

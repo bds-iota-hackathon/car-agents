@@ -2,6 +2,7 @@ var currLocation;
 locs = {};
 addr = "U9Y9PVIBHONULDYBMY9IXBUAZEGINTZQZOTFIXYECBBPNQXBBOTQOZPCIPQLROKWJJ9UWDTUBTNQVO9RD"
 url = "//10.0.61.162:8888";
+var balance = 0;
 
 function init() {
     $.get("http://10.0.61.162:8888/api/getbalance", {address: addr}, function (data) {
@@ -27,28 +28,34 @@ function showPosition(position) {
                     .catch(function (error) {
                     })
         */
-        /*$.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius: 2}, function (data) {
+
+        $.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius: 2}, function (data) {
             console.log("response")
             console.log(data)
             locs = data.data;
             init_map();
-        })*/
-        init_map();
+        })
+
+        //init_map();
 
     }
 }
 
-var balance = 2000;
 
+function donate(owner, value) {
+    console.log("paying")
+    $.get("http://10.0.61.162:8888/api/pay", {out: addr, in: owner, value: value}, function (data) {
+        console.log(data)
+    })
 
-function donate(address) {
-    fetch("/donate?address=" + address)
-        .then(function (data) {
-            window.alert("Thanks!")
-        })
-        .catch(function (error) {
-            console.log("error donating")
-        });
+    setTimeout(function(){
+        var bundle = "FANVFYWS9JITDDPI9F9YCYSSLCCFLTYLFRKSAIANXDWSU9YGSAIAOHYQ9IIZXWBCDFHHYFJYJDRQDNPNY";
+        $("#pay-information").hide();
+        $("#pay-link").attr("href", "https://testnet.thetangle.org/bundle/" + bundle);
+        $("#pay-success").show();
+        balance -= value;
+    }, 10000)
+
 };
 
 function show_station_details() {
@@ -64,9 +71,7 @@ function show_station_details() {
     $("#payment-address").text(station.owner);
 
     $("#charing-btn").click(function () {
-            loader_bar();
-            $("#pay-info").text(100 * station.price);
-            $("#pay-information").show();
+            loader_bar(station);
         }
     )
 
@@ -77,8 +82,12 @@ function show_station_details() {
     // /updateStation?id="+station.id+"&status=occupied
 }
 
-function loader_bar() {
+function loader_bar(station) {
+    var price = station.price
+    console.log(price, value)
     $("#charing-btn").hide();
+    $("#charging-text").show();
+
     $("#progress-bar-active").show();
     var value = 0;
     var interval = setInterval(function () {
@@ -87,14 +96,24 @@ function loader_bar() {
             .css("width", value + "%")
             .attr("aria-valuenow", value)
             .text(value + "%");
-        if (value >= 100)
+        $("#total-price").text(Math.round(price * value * 100) / 100 + " IOTA");
+        if (value >= 100) {
             clearInterval(interval);
+            $("#charging-text").hide();
+            $("#charged-text").show();
+            $("#pay-info").text(price * value);
+            $("#pay-information").show();
+
+            donate(station.owner, price * value);
+
+        }
     }, 500);
 }
 
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
+    /*
     locs = [{
         availability: "free",
         price: 0.01, // Given in milli iota
@@ -115,7 +134,7 @@ function init_map() {
             txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
             id: "asjkdasd"
         }];
-
+    */
     // fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
     //     .then(function(data){
     //         locs = data
@@ -169,7 +188,7 @@ function init_map() {
         var price = locs[j].price;
         var lat = locs[j].lat;
         var long = locs[j].long;
-        var status = locs[j].availability;
+        var status = locs[j].status;
         var txid = locs[j].txid;
         infoWindowContent.push([
             '<div class="info_content">'
