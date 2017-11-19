@@ -38,9 +38,7 @@ function show_station_details() {
     $("#payment-address").text(station.owner);
 
     $("#charing-btn").click(function () {
-            loader_bar().then(function() {
-                $("#pay-btn").toggleClass('hide');
-            });
+        loader_bar(station.price)
         } 
     )
 
@@ -51,18 +49,22 @@ function show_station_details() {
     // /updateStation?id="+station.id+"&status=occupied
 }
 
-function loader_bar() {
+function loader_bar(price) {
+    console.log(price, value)
     $("#charing-btn").hide();
-            $("#progress-bar-active").show();
-            var value = 0;
-            var interval = setInterval(function() {
-             value += 10;
-             $("#progress-bar")
-             .css("width", value + "%")
-             .attr("aria-valuenow", value)
-             .text(value + "%");
-             if (value >= 100)
-             clearInterval(interval);} ,500);
+
+    $("#progress-bar-active").show();
+    var value = 0;
+    var interval = setInterval(function() {
+        value += 10;
+        $("#progress-bar")
+        .css("width", value + "%")
+        .attr("aria-valuenow", value)
+        .text(value + "%");
+        $("#total-price").text(Math.round(price * value * 100)/100 + "IOTA");
+        if (value >= 100)
+        clearInterval(interval);
+    } ,500);
 }
 
 function init_map() {
