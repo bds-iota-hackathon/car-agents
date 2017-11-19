@@ -2,7 +2,7 @@
 # File to test all stuff in the api
 
 from iotawrapper import IotaWrapper
-from charging_station import ChargingStation, ChargingStationStatus
+import charging_station as cs
 from iota import *
 import json
 import logging
@@ -25,11 +25,9 @@ vendor_address = "OPMGOSBITOTGSZRESXAO9SGPAOOFEQ9OIPEMY9DEHPVOUULUHXIHHWBNFNMKXP
 customer_seed = "DOUPURWDDAX9NHSVIWQN9NHMHHYFM9LFSEOJANKPHGFSHBFAKCAKDDZV9LYMCHSJFMRZK9IPBOAQNLYNV"
 customer_address = "NSNOHLXXXPGJAUUVKZEDUPBEIJDDKA99LPOTSAD9SWKFRIVQKMQRXWMKJRNDIMANTKLZWWEVEWLQATYDB"
 
-lat = 54.409532
-lon = 18.2
-price = 0.5 # miota
-id = "Teststation"
-station = ChargingStation(lon, lat, price, id, vendor_address)
-
 # print iota.find_transactions(18, 54, 2)
-print station.advertise_free(iota)
+# print station.advertise_free(iota)
+
+# for stn in cs.FIVE_STATIONS:
+#     stn.advertise(iota)
+print iota.find_transactions_local()

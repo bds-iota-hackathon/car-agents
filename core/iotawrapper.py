@@ -1,5 +1,6 @@
 from iota import *
 from requests.exceptions import ConnectionError
+from charging_station import FIVE_STATIONS
 import json
 
 import logging
@@ -97,6 +98,9 @@ class IotaWrapper:
         else:
             msg_dicts = [json.loads(tx.signature_message_fragment.as_string()) for tx in txs]
             return [msg for msg in msg_dicts if self._within(msg, lon, lat, radius)]
+
+    def find_transactions_local(self):
+        return [cs.get_message() for cs in FIVE_STATIONS]
 
     def get_balance(self, address):
         try:
