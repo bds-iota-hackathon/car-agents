@@ -1,27 +1,24 @@
 from tornado_json.requesthandlers import APIHandler
-from core.iotawrapper import IotaWrapper
 from caragent.model.message import Message
+from caragent.model.response import Response
 
 
 class Search(APIHandler):
     def get(self):
         try:
-            lan = self.get_argument('lan', None)
-            long = self.get_argument('long', None)
-            print lan
-            print long
-            single_location = dict()
-            single_location['time'] = 123213213
-            single_location['lan'] = lan
-            single_location['long'] = long
-            single_location['id'] = 'GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA'
-            single_location['time'] = 'TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI'
+            lat = self.get_argument("lat", None)
+            lon = self.get_argument("lon", None)
+            radius = self.get_argument("radius", None)
+            if lat is None or lon is None or radius is None:
+                print "Something is bad"
+                raise Exception("Crap values")
 
-            locations = [single_location, single_location]
-            return locations
-
-        except:
-            self.set_status(404, 'Error')
+            response = self.application.iota.find_transactions(float(lon), float(lat), float(radius))
+        except Exception as e:
+            self.set_status(404, "Error: {e}".format(e=e))
+        else:
+            self.set_status(200, "OK")
+            self.write(Response(response).to_json())
 
 
 class UpdateStation(APIHandler):
@@ -36,9 +33,6 @@ class UpdateStation(APIHandler):
         message = Message(
             parameters={"id": id, "status": status}
         )
-
-        print message.to_json()
-
         bundle = self.application.iota.send_transfer(
             transfers=self.application.iota.create_transfers(
                 self.application.address,
@@ -46,8 +40,6 @@ class UpdateStation(APIHandler):
             ),
             inputs=self.application.iota.create_inputs(self.application.address)
         )
-
-        print bundle
 
         if bundle is not None:
             self.set_status(200, 'OK')

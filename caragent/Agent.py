@@ -7,7 +7,6 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado_json.application
-from tornado.options import options
 from tornado_json.routes import get_routes
 from core.iotawrapper import IotaWrapper
 
