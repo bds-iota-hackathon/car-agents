@@ -1,85 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <title>IOTA Vehicle Location Demo</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/bootstrap-theme.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/sb-admin-2.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="map.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <!-- Imports the google maps API-->
-  <script async defer src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=init"></script>
-</head>
-<body>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title>IOTA Vehicle Location Demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/sb-admin-2.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="map.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <!-- Imports the google maps API-->
+        <script async defer src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=init"></script>
+    </head>
+    <body>
 
-  <div class="page-header text-center">
-    <h3><i>PlugInBaby</i></h3>
-  </div>
-
-  <div class="container" id="station-container" hidden>
-    <div class="panel">
-      <div class="panel-body">
-        <div class="col-md-12">
-
-          <div class="col-md-5 col-sm-6">
-            <h4 class="control-label">
-              Your current balance
-            </h4>
-          </div>
-          <div class="col-md-7 col-sm-6">
-            <span id="balance"></span>
-          </div>
-
-          <div class="col-md-5 col-sm-6">
-            <h4 class="control-label">
-              Price per min
-            </h4>
-          </div>
-          <div class="col-md-7 col-sm-6">
-            <span id="price"></span>
-          </div>
-          <div class="col-md-5 col-sm-6">
-            <h4 class="control-label">
-              Total price
-            </h4>
-          </div>
-          <div class="col-md-7 col-sm-6">
-            <span id="total-price">0</span>
-          </div>
-          <div class="col-md-5 col-sm-6">
-            <button id="charing-btn" class="btn btn-md btn-primary">
-              Start Charging
-            </button>
-            <div class="progress" id ="progress-bar-active" hidden>
-             <div class="progress-bar progress-bar-striped active" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-              Progress    
-            </div>
-           </div>
-           <div class="pay-btn-class" id="pay-button">
-           <button id="pay-btn" class="btn btn-md btn-primary" >
-              Pay
-           </button>
-           </div>
-          </div>
-
+        <div class="page-header text-center">
+            <h3><i>PlugInBaby</i></h3>
         </div>
-      </div>
-    </div>
-  </div>
+
+        <div class="container" id="station-container" hidden>
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="col-md-12">
+
+                        <div class="col-md-5 col-sm-6">
+                            <h4 class="control-label">
+                                Your current balance
+                            </h4>
+                        </div>
+                        <div class="col-md-7 col-sm-6">
+                            <span id="balance"></span>
+                        </div>
+
+                        <div class="col-md-5 col-sm-6">
+                            <h4 class="control-label">
+                                Price
+                            </h4>
+                        </div>
+                        <div class="col-md-7 col-sm-6">
+                            <span id="price"></span>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                          <h4 class="control-label">
+                            Total price
+                          </h4>
+                        </div>
+                        <div class="col-md-7 col-sm-6">
+                          <span id="total-price">0</span>
+                        </div>
+                        <div class="col-md-5 col-sm-6">
+                            <button id="charing-btn" class="btn btn-md btn-primary">
+                                Start Charging
+                            </button>
+                            <div class="progress" id ="progress-bar-active" hidden>
+                                <div class="progress-bar progress-bar-striped active" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                    Progress
+                                </div>
+                            </div>
+                            <div class="pay-btn-class" id="pay-button">
+                                <button id="pay-btn" class="btn btn-md btn-primary" >
+                                    Pay
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-  <div class="container" id="map-container">
-    <div id="map_wrapper" style='height: 400px'>
-      <div id="map_canvas" class="mapping" style="width: 100%; height: 100%"></div>
-    </div>
-  </div>
+        <div class="container" id="map-container">
+            <div id="map_wrapper" style='height: 400px'>
+                <div id="map_canvas" class="mapping" style="width: 100%; height: 100%"></div>
+            </div>
+        </div>
 
-</body>
+    </body>
 </html>
