@@ -74,3 +74,15 @@ class Pay(APIHandler):
                     self.write(response.to_json())
                     return
         self.set_status(404, 'Error')
+
+
+class GetBalance(APIHandler):
+    def get(self):
+        try:
+            balance = self.application.iota.get_balance(self.application.address)
+            response = Response(balance)
+        except Exception as e:
+            self.set_status(404, "Error")
+        else:
+            self.set_status(200, "OK")
+            self.write(response.to_json())

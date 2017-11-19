@@ -97,6 +97,17 @@ class IotaWrapper:
             msg_dicts = [json.loads(msg.signature_message_fragment.as_string()) for msg in txs]
             return [msg for msg in msg_dicts if self._within(msg, lon, lat, radius)]
 
+    def get_balance(self, address):
+        try:
+            response = self.__api.get_balances([Address(address)])
+            if "balances" in response:
+                return response["balances"][0]
+            raise BadApiResponse
+        except ConnectionError as e:
+            logger.exception("Connection error: {e}".format(e=e))
+        except BadApiResponse as e:
+            logger.exception("Bad Api Response: {e}".format(e=e))
+
     def _within(self, txd, lon, lat, radius):
         if "long" not in txd or "lat" not in txd:
             return False
