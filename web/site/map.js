@@ -1,46 +1,40 @@
 var currLocation;
 locs = {};
-
+addr = "U9Y9PVIBHONULDYBMY9IXBUAZEGINTZQZOTFIXYECBBPNQXBBOTQOZPCIPQLROKWJJ9UWDTUBTNQVO9RD"
 url = "//10.0.61.162:8888";
 
 function init() {
+    $.get("http://10.0.61.162:8888/api/getbalance", {address: addr}, function (data) {
+        console.log(data)
+        balance = data.data
+    })
     navigator.geolocation.getCurrentPosition(showPosition)
 };
 
 function showPosition(position) {
-
     if (position) {
         currLocation = {lat: position.coords.latitude, long: position.coords.latitude};
 
         console.log("calling")
 
-/*
-        fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
-            .then(function (data) {
-                console.log("response")
-                console.log(data)
-                locs = data
-            })
-            .catch(function (error) {
-            })
-*/
-        $.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius:2}, function(data){   console.log("response")
+        /*
+                fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+                    .then(function (data) {
+                        console.log("response")
+                        console.log(data)
+                        locs = data
+                    })
+                    .catch(function (error) {
+                    })
+        */
+        /*$.get("http://10.0.61.162:8888/api/search", {lat: 54, lon: 18, radius: 2}, function (data) {
+            console.log("response")
             console.log(data)
             locs = data.data;
             init_map();
-        })
+        })*/
+        init_map();
 
-/*
-        console.log(url)
-        $.get("http://10.0.61.162:8888/api/search", {lat: currLocation.lat, long: currLocation.long, radius:1},
-            function(data){
-            console.log("response")
-            locs = data;
-            init_map();
-        }, function(error){
-                console.log("error")
-            });
-*/
     }
 }
 
@@ -59,6 +53,10 @@ function donate(address) {
 
 function show_station_details() {
     var station = locs[$("#station-button").attr("data-address")];
+
+    // TODO mark station as occupied
+    // fetch("/updateStation?id="+station.id+"&status=occupied")
+
     $("#map-container").hide();
     $("#station-container").show();
     $("#balance").text(balance);
@@ -66,23 +64,38 @@ function show_station_details() {
     $("#payment-address").text(station.owner);
 
     $("#charing-btn").click(function () {
-            $("#charing-btn").hide();
-            $("#progress-bar").show();
-
-            for (i = 0; i <= 100; i += 1) {
-
-                $("#progress-bar").css("width", i + "%");
-                $("#progress-bar").text(i + "%");
-            }
+            loader_bar();
+            $("#pay-info").text(100 * station.price);
+            $("#pay-information").show();
         }
     )
+
+    // TODO pay
+    // "/pay?address="+station.address
+
+    // TODO mark station as free
+    // /updateStation?id="+station.id+"&status=occupied
+}
+
+function loader_bar() {
+    $("#charing-btn").hide();
+    $("#progress-bar-active").show();
+    var value = 0;
+    var interval = setInterval(function () {
+        value += 10;
+        $("#progress-bar")
+            .css("width", value + "%")
+            .attr("aria-valuenow", value)
+            .text(value + "%");
+        if (value >= 100)
+            clearInterval(interval);
+    }, 500);
 }
 
 function init_map() {
     console.log(currLocation.lat, currLocation.long);
 
-    /**
-     locs = [{
+    locs = [{
         availability: "free",
         price: 0.01, // Given in milli iota
         long: -0.119562,
@@ -92,22 +105,22 @@ function init_map() {
         txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
         id: "asjkdasd"
     },
-     {
-         availability: "occupied",
-         price: 0.01, // Given in milli iota
-         long: -0.119580,
-         lat: 51.503474,
-         owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
-         address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
-         txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
-         id: "asjkdasd"
-     }];
-     */
-        // fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
-        //     .then(function(data){
-        //         locs = data
-        //     })
-        //     .catch(function(error) {})
+        {
+            availability: "occupied",
+            price: 0.01, // Given in milli iota
+            long: -0.119580,
+            lat: 51.503474,
+            owner: "GFDSAHOFDSHAUFSAZFSAHFFHDSIAHDISAHIDJFDSKAJDSA",
+            address: "TIZODOIHIDSHAUGIDSGAIDSAHODSGIDSAIUDSADSAOI",
+            txid: "DHWSGSFB9MKZZCJCYGAOXMKFCUXQYSI9DZTUTIBPNCN9DMFRHDXEFOQRIESSOFSIMTUYICABUYWJWZ999",
+            id: "asjkdasd"
+        }];
+
+    // fetch('/search?long=' + currLocation.long + '&lat=' + currLocation.lat)
+    //     .then(function(data){
+    //         locs = data
+    //     })
+    //     .catch(function(error) {})
 
     var map;
     var bounds = new google.maps.LatLngBounds();
@@ -161,12 +174,12 @@ function init_map() {
         infoWindowContent.push([
             '<div class="info_content">'
             + show_price(price)
+            + '<p>(' + status + ')</p>'
             + show_directions_link(lat, long)
             + show_testnet_link(txid)
             + '    <div class="div-center col-md-2 col-sm-2">\n' +
             '      <button id="station-button" data-address="' + j + '" onclick="show_station_details()" class="btn btn-success btn-md">I\'m There!</button>\n' +
             '    </div>'
-            // + '<a href = "/updateStation?id=stationID&status=FREE">  Claim </a>'
             + '</div>\n'
         ])
         markers.push([locs[j].lat, locs[j].long, price, status]);
