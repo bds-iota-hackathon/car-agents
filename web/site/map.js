@@ -61,7 +61,7 @@ function loader_bar(price) {
         .css("width", value + "%")
         .attr("aria-valuenow", value)
         .text(value + "%");
-        $("#total-price").text(Math.round(price * value * 100)/100 + "IOTA");
+        $("#total-price").text(Math.round(price * value * 100)/100 + " IOTA");
         if (value >= 100)
         clearInterval(interval);
     } ,500);
