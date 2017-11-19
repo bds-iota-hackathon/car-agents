@@ -38,7 +38,21 @@ function show_station_details() {
     $("#payment-address").text(station.owner);
 
     $("#charing-btn").click(function () {
-            $("#charing-btn").hide();
+            loader_bar().then(function() {
+                $("#pay-btn").toggleClass('hide');
+            });
+        } 
+    )
+
+    // TODO pay
+    // "/pay?address="+station.address
+
+    // TODO mark station as free
+    // /updateStation?id="+station.id+"&status=occupied
+}
+
+function loader_bar() {
+    $("#charing-btn").hide();
             $("#progress-bar-active").show();
             var value = 0;
             var interval = setInterval(function() {
@@ -48,15 +62,7 @@ function show_station_details() {
              .attr("aria-valuenow", value)
              .text(value + "%");
              if (value >= 100)
-             clearInterval(interval);}, 1000);
-        }
-    )
-
-    // TODO pay
-    // "/pay?address="+station.address
-
-    // TODO mark station as free
-    // /updateStation?id="+station.id+"&status=occupied
+             clearInterval(interval);} ,500);
 }
 
 function init_map() {
