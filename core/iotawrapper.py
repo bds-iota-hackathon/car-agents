@@ -116,6 +116,6 @@ class IotaWrapper:
     def _within(self, txd, lon, lat, radius):
         if "long" not in txd or "lat" not in txd:
             return False
-        x = txd['long'] - lon
-        y = txd['lat'] - lat
+        x = float(txd['long']) - lon
+        y = float(txd['lat']) - lat
         return x * x + y * y < radius ** 2

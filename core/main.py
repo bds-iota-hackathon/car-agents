@@ -30,4 +30,5 @@ customer_address = "NSNOHLXXXPGJAUUVKZEDUPBEIJDDKA99LPOTSAD9SWKFRIVQKMQRXWMKJRND
 
 # for stn in cs.FIVE_STATIONS:
 #     stn.advertise(iota)
-print iota.find_transactions_local()
+# print iota.find_transactions_local()
+# print iota.find_transactions(18, 54, 2)
