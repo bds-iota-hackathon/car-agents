@@ -132,6 +132,7 @@ function init_map() {
         infoWindowContent.push([
             '<div class="info_content">'
             + show_price(price)
+            + '<p>(' + status + ')</p>'
             + show_directions_link(lat, long)
             + show_testnet_link(txid)
             + '    <div class="div-center col-md-2 col-sm-2">\n' +
