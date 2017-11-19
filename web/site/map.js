@@ -39,15 +39,19 @@ function show_station_details() {
 
     $("#charing-btn").click(function () {
             $("#charing-btn").hide();
-            $("#progress-bar").show();
-
-            for(i = 0; i <= 100; i+=1){
-
-                $("#progress-bar").css("width", i + "%");
-                $("#progress-bar").text(i + "%");
-            }
+            $("#progress-bar-active").show();
+            var value = 0;
+            var interval = setInterval(function() {
+             value += 10;
+             $("#progress-bar")
+             .css("width", value + "%")
+             .attr("aria-valuenow", value)
+             .text(value + "%");
+             if (value >= 100)
+             clearInterval(interval);}, 1000);
         }
     )
+
 }
 
 function init_map() {
